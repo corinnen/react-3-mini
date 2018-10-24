@@ -31,16 +31,30 @@ class App extends Component {
   getVehicles() {
     // axios (GET)
     // setState with response -> vehiclesToDisplay
-  }
+    axios.get('https://joes-autos.herokuapp.com/api/vehicles').then(results => {
+      toast.success("hooray");
+      this.setState({ 'vehiclesToDisplay': results.data });
+     }) .catch( () => toast.error("failed") );
+    }
+
+  
 
   getPotentialBuyers() {
     // axios (GET)
     // setState with response -> buyersToDisplay
+    axios.get('https://joes-autos.herokuapp.com/api/vehicles').then (results => {
+      toast.success ("yup");
+      this.setState({ 'buyersToDisplay': results.data });
+    }) .catch ( () => toast.error("nope") );
   }
 
   sellCar(id) {
     // axios (DELETE)
     // setState with response -> vehiclesToDisplay
+    axios.delete(`https://joes-autos.herokuapp.com/api/vehicles/ ${id}`).then( results => {
+      toast.success("SOLD!");
+      this.setState({'vehiclesToDisplay':results.data.vehicles})
+    }) .catch( () => toast.error("Not sold") );
   }
 
   filterByMake() {
@@ -48,6 +62,10 @@ class App extends Component {
 
     // axios (GET)
     // setState with response -> vehiclesToDisplay
+    axios.get(`https://joes-autos.herokuapp.com/api/vehicles`).then(results => {
+      toast.success("New search");
+      this.setState({'vehiclesToDisplay': results.data});
+    }) .catch( () => toast.error("did not filter") );
   }
 
   filterByColor() {
@@ -55,12 +73,21 @@ class App extends Component {
 
     // axios (GET)
     // setState with response -> vehiclesToDisplay
+    axios.get(`https://joes-autos.herokuapp.com/api/vehicles`).then(results => {
+      toast.success("You have filtered by color");
+      this.setState({'vehiclesToDisplay': results.data})
+    } ) .catch( () => toast.error("Not filtered by color" ) );
   }
 
   updatePrice(priceChange, id) {
     // axios (PUT)
     // setState with response -> vehiclesToDisplay
+    axios.put(`https://joes-autos.herokuapp.com/api/vehicles/${ id}/${ priceChange }`).then (results => {
+      toast.success ("nice!");
+      this.setState({ 'vehiclesToDisplay': results.data.vehicles});
+    }) .catch ( () => toast.error ("not nice!") );
   }
+
 
   addCar() {
     let newCar = {
@@ -73,6 +100,10 @@ class App extends Component {
 
     // axios (POST)
     // setState with response -> vehiclesToDisplay
+    axios.post(`https://joes-autos.herokuapp.com/api/vehicles`, newCar).then (results => {
+      toast.success ("Vehicle added!");
+      this.setState({'vehiclesToDisplay': results.data.vehicles});
+    }) .catch( () => toast.error ("Vehicle failed to add") );
   }
 
   addBuyer() {
@@ -84,11 +115,19 @@ class App extends Component {
 
     //axios (POST)
     // setState with response -> buyersToDisplay
+    axios.post(`https://joes-autos.herokuapp.com/api/vehicles`, newBuyer).then (results => {
+      toast.success("Buyer added!");
+      this.setState({'buyersToDisplay': results.data.vehicles})
+    }) .catch(() => toast.error("Did not add buyer"));
   }
 
   deleteBuyer(id) {
     // axios (DELETE)
     //setState with response -> buyersToDisplay
+    axios.delete(`https://joes-autos.herokuapp.com/api/vehicles/${id}`) .then( results => {
+      toast.success("Buyer removed");
+      this.setState({'buyersToDisplay': results.data.vehicles});
+    }) .catch( () => toast.error("Buyer unchanged") );
   }
 
   nameSearch() {
@@ -96,6 +135,10 @@ class App extends Component {
 
     // axios (GET)
     // setState with response -> buyersToDisplay
+    axios.get(`https://joes-autos.herokuapp.com/api/vehicles`) .then( results => {
+      toast.success("You have your names.");
+      this.setState({'buyersToDisplay': results.data});
+    }) .catch( () => toast.error("Wrong-o") );
   }
 
   byYear() {
@@ -103,6 +146,10 @@ class App extends Component {
 
     // axios (GET)
     // setState with response -> vehiclesToDisplay
+    axios.get(`https://joes-autos.herokuapp.com/api/vehicles`) .then( results => {
+      toast.success("Your Year!");
+      this.setState({'vehiclesToDisplay': results.data});
+    }) .catch( () => toast.error("Not working") );
   }
 
   // Do not edit the code below
